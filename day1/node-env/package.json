@@ -1,0 +1,9 @@
+{
+  "name": "node-env",
+  "version": "1.0.0",
+  "description": "Simple Node.js app to display environment variables",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
