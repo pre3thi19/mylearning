@@ -41,7 +41,7 @@ app.MapGet("/", () =>
     foreach (var key in Environment.GetEnvironmentVariables().Keys)
     {
         var k = key?.ToString() ?? "";
-        var val = Envionment.GetEnvironmentVariable(k) ?? "";
+        var val = Environment.GetEnvironmentVariable(k) ?? "";
         html += $"<li><b>{k}</b>: {val}</li>";
     }
     html += "</ul>";
@@ -54,6 +54,3 @@ app.MapGet("/", () =>
 });
 
 app.Run();
-
-
-\\
