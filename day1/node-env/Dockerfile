@@ -8,6 +8,6 @@ COPY . .
 # Stage 2: Runtime
 FROM node:20
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /app . 
 EXPOSE 3000
 ENTRYPOINT ["npm", "start"]

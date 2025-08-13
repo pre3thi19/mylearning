@@ -1,0 +1,12 @@
+{
+  "port": 3000,
+  "app": {
+    "name": "Node Config Demo",
+    "environment": "Default"
+  },
+  "db": {
+    "host": "localhost",
+    "port": 5432
+  }
+}
+
