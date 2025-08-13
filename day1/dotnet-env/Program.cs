@@ -50,6 +50,7 @@ app.MapGet("/", () =>
     }
     html += "</ul>";
 
+    // Display the value from appsettings.json or appsettings.Docker.json
     html += $"<h2>AppSettings Environment: {config["Environment"]}</h2>";
 
     return Results.Content(html, "text/html");
