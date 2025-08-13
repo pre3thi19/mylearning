@@ -1,0 +1,8 @@
+{
+  "app": {
+    "environment": "APP_ENV"
+  },
+  "db": {
+    "host": "DB_HOST"
+  }
+}
