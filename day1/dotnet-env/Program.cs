@@ -26,12 +26,12 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ensure config loads appsettings.json + appsettings.{ENV}.json
+// Load JSON configs based on ASPNETCORE_ENVIRONMENT
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
+    .AddEnvironmentVariables(); // this ensures docker -e overrides JSON
 
 var app = builder.Build();
 
@@ -46,7 +46,7 @@ app.MapGet("/", () =>
     }
     html += "</ul>";
 
-    // Get "Environment" value from merged config
+    // Value will come from JSON, or override from docker -e
     var environmentValue = app.Configuration["Environment"] ?? "Not Found";
     html += $"<h2>AppSettings Environment: {environmentValue}</h2>";
 
@@ -54,3 +54,4 @@ app.MapGet("/", () =>
 });
 
 app.Run();
+
