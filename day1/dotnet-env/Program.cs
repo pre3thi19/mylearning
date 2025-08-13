@@ -20,23 +20,19 @@
 
 // app.Run(); 
 
-
-
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 
-var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+var builder = WebApplication.CreateBuilder(args);
 
-var configBuilder = new ConfigurationBuilder()
+// Ensure config loads appsettings.json + appsettings.{ENV}.json
+builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
-var config = configBuilder.Build();
-
-var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.MapGet("/", () =>
@@ -50,10 +46,14 @@ app.MapGet("/", () =>
     }
     html += "</ul>";
 
-    // Display the value from appsettings.json or appsettings.Docker.json
-    html += $"<h2>AppSettings Environment: {config["Environment"]}</h2>";
+    // Get "Environment" value from merged config
+    var environmentValue = app.Configuration["Environment"] ?? "Not Found";
+    html += $"<h2>AppSettings Environment: {environmentValue}</h2>";
 
     return Results.Content(html, "text/html");
 });
 
 app.Run();
+
+
+\\
